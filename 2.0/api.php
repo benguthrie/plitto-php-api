@@ -67,6 +67,18 @@ switch(strtolower($apiCall)){
 */
 
 
+/* 10/20/2014 */
+
+// Populate the thing modal.
+case 'showfeed':
+	
+	if(isset($_POST['token'])){
+		require_once('api_showFeed.php');
+	} else {
+		$obj = tokenError();
+	}
+
+break;
 
 case "listsearch":
 	if(isset($_POST['token'])){
@@ -158,7 +170,7 @@ break;
 
 case 'getsome':
 	
-	if(isset($_POST['token'])){
+	if( isset($_POST['token'])  ){
 		require_once('api_getSome.php');
 	} else {
 		$obj = tokenError();

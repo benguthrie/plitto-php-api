@@ -14,6 +14,6 @@
 	// }
 
 	// 
-	$result = q($q); $obj['result'] = $result;
+	$result = q($q); $obj['results'] = $result;
 
 ?>

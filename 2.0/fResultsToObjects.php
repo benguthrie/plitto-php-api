@@ -82,8 +82,10 @@ function resultsToObject($results){
 
 		$obj = $theResults;		
 	} else {
-		$obj['error'] = true;
-		$obj['errorTxt'] = 'No Activity from your friends';
+		// $obj['error'] = true;
+		// $obj['errorTxt'] = 'No Activity from your friends';
+		// There are no items. Just return an empty array.
+		$theResults = Array();
 	}
 	return $obj;
 }
