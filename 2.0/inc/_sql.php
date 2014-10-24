@@ -34,6 +34,9 @@ class sql{
 		$sql_log = "insert into log_queries (QueryID, queryText, queryTime) values ('".$id."','".addslashes($sql)."','$queryTime')";
 		mysql_query($sql_log);
 		// echo $sql_log;
+
+
+
 		return $result;
 	}
 	

@@ -59,28 +59,64 @@ function connDb(){
 	$mysqli = new mysqli($conn['dba'],$conn['user'],$conn['pwd'],$conn['db']);
 	 	/* check connection */
 		if (mysqli_connect_errno()) {
-		    echo "Connect failed: %s\n" & mysqli_connect_error();
+		    // die(sprintf("[%d] %s\n", mysqli_connect_errno(), mysqli_connect_error()));
+		    $obj = Array();
+		 	$obj[] = Array('error'=> true, 'errortxt'=> $mysqli->mysqli_connect_error(), 'mysqlerrornum'=>$mysqli->mysqli_connect_errno());
 		    exit();
+		} 
+
+		if (!($res = $mysqli->query($q))) {
+		 // printf("[%d] %s\n", $mysqli->errno, $mysqli->error);
+		 	$obj = Array();
+		 	$obj[] = Array('error'=> true, 'errortxt'=> $mysqli->error, 'mysqlerrornum'=>$mysqli->errno);
+		 	return $obj;
 		} else {
-			// $q = 'select count(*) from tlist';			$q = "call `spFbLogin` ('532345366', 'Ben Guthrie','ben@bemily.com')";
+		 	$obj = Array();
+ 
+		 	// 
 
-			$result = mysqli_query($mysqli,$q);
-	
-			// echo $q;
-			$obj = Array();
+		 	// echo $q;
 
-			while ($row = $result->fetch_assoc()) {
-			    // do what you need.
-			    // $obj[$a] -> $row;
-				$obj[] = $row;    
-			}	
+		 	// 
+			$debug = false;
 
-			mysqli_free_result($result);
+			if($debug === true){
+
+		 	$result = mysqli_query($mysqli,$q);
+		 	//echo('<h1>result</h1>');
+			//print_r($result);
+			//echo('<h1>res</h1>');
+			// print_r($res);
+
+		 	}
+
+		 	if(is_object($res)){
+				while ( $row = $res->fetch_assoc() ) {
+				    // do what you need. 
+				    // $obj[$a] -> $row;
+				    // echo("Row:");
+				    // print_r($row);
+					// $obj.push( $row );     
+					// array_push($obj,$row);
+					$obj[] = $row;
+				}	
+			}else{
+				$obj[] = Array( 'error'=>true, 'errortxt'=>'No rows returned', 'res'=> $res );
+			} 
+
+			// $obj[] = Array('error'=>true, 'errortxt'=>'No rows returned', 'res'=> $res);
+			
+			
+			$obj['q'] = $q;
+
+
 			return $obj;
-
-			mysqli_close($mysqli);
 		}
 
+		
+
+		$mysqli -> close(); 
+ 
 		// echo $q;		
 }
 

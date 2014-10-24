@@ -17,6 +17,10 @@ function resultsToObject($results){
 
 		// Convert the results into a nice obect 
 		for($i=0; $i < count($results); $i++){
+			if(!isset($results[$i]['uid'])){
+				break;
+			}
+
 			// Check to see if the user id is different.
 			if($uid !== $results[$i]['uid'] ){
 				

@@ -70,6 +70,14 @@ switch(strtolower($apiCall)){
 /* 10/20/2014 */
 
 // Populate the thing modal.
+case 'test':
+	$_POST['token'] = '2adba3539cb1aaa9d48ed26d36b27906';
+	$_POST['type'] = "";
+	$_POST['userFilter'] = "";
+	$_POST['listFilter'] = "";
+	require_once('api_getSome.php');
+break;
+
 case 'showfeed':
 	
 	if(isset($_POST['token'])){
