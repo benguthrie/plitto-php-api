@@ -14,7 +14,7 @@
 	*/
 
 	// 
-	$q = "call `v2.0_getSome`('".$_POST['type']."','".$_POST['token']."','".$_POST['userFilter']."','".$_POST['listFilter']."');";
+	$q = "call `v2.0_getSome`('".$_POST['type']."','".$_POST['token']."','".$_POST['userFilter']."','".$_POST['listFilter']."','".$_POST['sharedFilter']."');";
 	
 
 	$results = q($q);
@@ -36,7 +36,8 @@
 		if(isset($results[0]['error'])){
 			// $obj['results'] =$results;
 			$obj['q'] = $q;
-			$obj['errortxt'] = "This didn't fit the model.";
+			$obj['errortxt'] = "Error. This didn't fit the model.";
+			$obj['results'] = $results;
 		} else {
 			$obj['q'] = $q;	
 			// 

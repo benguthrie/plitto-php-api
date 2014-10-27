@@ -45,7 +45,7 @@
 			$friendsResult = q($q);
 			$obj['friends'] = $friendsResult;
 
-			$qg = "call `v2.0_getSome`('','".$token."','','');";
+			$qg = "call `v2.0_getSome`('','".$token."','','','ditto');";
 
 			$obj['qg'] = $qg;
 		 
