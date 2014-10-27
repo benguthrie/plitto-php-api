@@ -19,13 +19,13 @@ function connDb(){
 
 }
 
-
+/*
  function d($q){
 
 	$conn = connDb();
 	$mysqli = new mysqli($conn['dba'],$conn['user'],$conn['pwd'],$conn['db']);
-	 	/* check connection */
-		if (mysqli_connect_errno()) {
+	 	// check connection 
+	 	if (mysqli_connect_errno()) {
 		    echo "Connect failed: %s\n" & mysqli_connect_error();
 		    exit();
 		}
@@ -47,7 +47,7 @@ function connDb(){
 
 
 		// return $obj;
-}
+} */
 
 // For a single result set.
  function q($q){
@@ -107,7 +107,7 @@ function connDb(){
 			// $obj[] = Array('error'=>true, 'errortxt'=>'No rows returned', 'res'=> $res);
 			
 			
-			$obj['q'] = $q;
+			// $obj['q'] = $q;
 
 
 			return $obj;

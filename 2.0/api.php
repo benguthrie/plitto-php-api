@@ -1,6 +1,7 @@
 <?php
 session_start();
 header('Content-type: application/json');
+header("Access-Control-Allow-Origin: *");
 
  	require_once('sql.inc');
 

@@ -3,6 +3,9 @@
 // Updated 9/16/2014 to include the ditto source information. This is the standard list data model.
 function resultsToObject($results){
 	$obj = Array();
+
+
+
 	// echo $results;
 	// Ensure that there are results
 	if(count($results) > 0){
@@ -14,6 +17,8 @@ function resultsToObject($results){
 
 		$u = Array();
 		$l = Array();
+
+
 
 		// Convert the results into a nice obect 
 		for($i=0; $i < count($results); $i++){
@@ -69,15 +74,25 @@ function resultsToObject($results){
 			// Add the item to the current list.
 			$l['items'][] = Array(
 				'added' => $results[$i]['added']
+
 				, 'tid' => $results[$i]['tid']
-				, 'thingname' =>$results[$i]['thingname']
-				, 'mykey' => $results[$i]['mykey']
-				// 'show' => $data[$i]['show'],
 				,'dittokey' => $results[$i]['dittokey']
+				, 'mykey' => $results[$i]['mykey']
 				,'dittouser' => $results[$i]['dittouser']
 				,'dittofbuid' => $results[$i]['dittofbuid']
 				,'dittousername' => $results[$i]['dittousername']
-		);
+				, 'thingname' => $results[$i]['thingname']
+
+/*
+	
+				
+
+				// 'show' => $data[$i]['show'],
+				
+				
+*/
+			);
+			
 		}
 
 		// Finally, add the last list to the last user, and that to the recordset.
@@ -89,7 +104,7 @@ function resultsToObject($results){
 		// $obj['error'] = true;
 		// $obj['errorTxt'] = 'No Activity from your friends';
 		// There are no items. Just return an empty array.
-		$theResults = Array();
+		$theResults = Array("message"=>"No Records");
 	}
 	return $obj;
 }

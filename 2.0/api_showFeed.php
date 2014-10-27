@@ -13,8 +13,25 @@ $q = "call `v2.0_feed`('"
 
 $obj['q'] = $q;
 
-// $obj['results'] = q($q);
-$obj['results'] = resultsToObject(q($q));
+$results = q($q);
+
+	$debug = false;
+
+	if($debug == true){
+		$obj['q'] = $q;	
+		// $obj['results'] = $results;
+		print_r($results);
+
+		foreach($results as $row){
+			echo "row" . $row['id']."
+			";
+		}
+
+	} else {
+
+		// $obj['results'] = q($q);
+		$obj['results'] = resultsToObject($results);
+	}
 
 ?>
 
