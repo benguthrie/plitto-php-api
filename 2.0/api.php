@@ -79,6 +79,15 @@ case 'test':
 	require_once('api_getSome.php');
 break;
 
+case 'loadlist':
+	if(isset($_POST['token'])){
+		require_once('api_loadList.php');
+	} else {
+		$obj = tokenError();
+	}
+
+break;
+
 case 'showfeed':
 	
 	if(isset($_POST['token'])){
