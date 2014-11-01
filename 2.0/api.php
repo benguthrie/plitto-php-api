@@ -67,6 +67,13 @@ switch(strtolower($apiCall)){
 	!
 */
 
+/* 10/31/2014 */
+case 'fbtoken':
+	require_once('api_fbToken.php');
+
+
+break;
+
 
 /* 10/20/2014 */
 
