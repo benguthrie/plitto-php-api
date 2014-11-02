@@ -69,18 +69,7 @@ try {
   	// Prepare the friends
   	$friendsArr = Array();
 
-  	// Debug
-  	// $obj['friendsTemp'] = $friends;
-
-  	// print_r($friends['data']);
-  	// echo 'start';
-  	// $friends = (array) $friends;
-  	// $friends = (object) $friends;
-  	// $friends = (array) $friends;
-  	// print_r($friends -> data);
-  	// print_r($friends ->'data');
-  	// echo 'end';
-
+  	
 		for($i=0; $i<count($friends -> data); $i++){
 
 			$friendsArr[] = $friends -> data[$i] -> id;
@@ -95,17 +84,20 @@ try {
 
 		if($debug===false){
 			$obj['q'] =$q;
-			// q('call `spSqlLog`(0,"'.sanitize($q).'",0.7035,"giggle")');
+			// Debug
+	  	// $obj['friendsTemp'] = $friends;
+
+	  	// print_r($friends['data']);
+	  	// echo 'start';
+	  	// $friends = (array) $friends;
+	  	// $friends = (object) $friends;
+	  	// $friends = (array) $friends;
+	  	// print_r($friends -> data);
+	  	// print_r($friends ->'data');
+	  	// echo 'end';
+
 		} else {
-			// Log the login queries.
-				// spSqlLog`(userId INT, thequery TEXT, logtime DECIMAL(12,5), sp VARCHAR(45))
 			
-			// 
-			$obj['q'] = $q;
-			// 
-
-
-
 			$results = q($q);
 			$obj['resultstemp'] = $results;
 
@@ -125,9 +117,6 @@ try {
 		 
 			$getSome = q($qg); 
 			$obj['getSome'] =  resultsToObject($getSome);
-		
-			
-
 		}
   }
   // echo json_encode($obj);

@@ -33,7 +33,7 @@
 
 
 			$results = q($q);
-			$obj['resultstemp'] = $results;
+			// $obj['resultstemp'] = $results;
 
 			// PRINT_R($results[0]);
 
