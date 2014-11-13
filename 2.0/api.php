@@ -193,6 +193,14 @@ case 'getsome':
 	}
 break;
 
+case "thingid":
+
+//TODO0 $_POST['thingName']='Joseph';
+	$q = 'call spthingId("'.sanitize($_POST['thingName']).'");';
+	$obj['q'] = $q;
+	$obj['results'] = q($q);
+break;
+
 
 
 
@@ -441,14 +449,6 @@ case 'lo':
 break;
 
 
-
-case "thingid":
-
-//TODO0 $_POST['thingName']='Joseph';
-	$q = 'call spthingId("'.sanitize($_POST['thingName']).'");';
-	$obj['q'] = $q;
-	$obj['results'] = q($q);
-break;
 
 
 

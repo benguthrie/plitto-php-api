@@ -3,6 +3,14 @@
 
 $obj['thetoken'] = $_POST['token'];
 
+// Prep the variables
+if(!isset($_POST['newerOrOlder'])){
+	$newerOrOlder = '';
+}
+else {
+	$newerOrOlder = $_POST['newerOrOlder'];
+}
+
 $q = "call `v2.0_feed`('"
 	.$_POST['token'] . "'"
 	.",'".$_POST['theType'] ."'"
@@ -10,7 +18,7 @@ $q = "call `v2.0_feed`('"
 	.",'".$_POST['listFilter'] ."'"
 	.",'".$_POST['myState'] ."'"
 	.",'".$_POST['continueKey']."'"
-	.",'".$_POST['newerOrOlder']."'"
+	.",'".$newerOrOlder."'"
 	.");";
 
 $obj['q'] = $q;
