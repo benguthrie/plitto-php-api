@@ -4,7 +4,7 @@
 function resultsToObject($results){
 	$obj = Array();
 
-
+	$obj['rowcount'] = count($results);
 
 	// echo $results;
 	// Ensure that there are results
@@ -23,7 +23,9 @@ function resultsToObject($results){
 		// Convert the results into a nice obect 
 		for($i=0; $i < count($results); $i++){
 			if(!isset($results[$i]['uid'])){
-				break;
+				$obj['error'] = true;
+				$obj['errortxt'] = "unknown uid at row ".$i;
+				break 1;
 			}
 
 			// Check to see if the user id is different.
@@ -65,12 +67,12 @@ function resultsToObject($results){
 				}
 				// Create the new list
 				$l = Array('lid' => $results[$i]['lid'], 
-					'listname' => $results[$i]['listname'], 
+					'listname' => json_decode( json_encode($results[$i]['listname']) ), 
 					'items'=> Array());
 				// Set the new list varialbe.
 				$lid = $results[$i]['lid'];
 			}
-
+/*
 			// Add the item to the current list.
 			$l['items'][] = Array(
 				'added' => $results[$i]['added']
@@ -83,16 +85,21 @@ function resultsToObject($results){
 				,'dittousername' => $results[$i]['dittousername']
 				, 'thingname' => $results[$i]['thingname']
 
-/*
-	
-				
-
-				// 'show' => $data[$i]['show'],
-				
-				
-*/
 			);
-			
+			*/
+
+// Add the item to the current list.
+			$l['items'][] = Array(
+				"id" => $results[$i]['id']
+				, "added" => $results[$i]['added']
+				, "tid" => $results[$i]['tid']
+				, "dittokey" => $results[$i]['dittokey']
+				, "mykey" => $results[$i]['mykey']
+				, "dittouser" => $results[$i]['dittouser']
+				, "dittofbuid" => $results[$i]['dittofbuid']
+				, "dittousername" => $results[$i]['dittousername']
+				, "thingname" => json_decode( json_encode($results[$i]['thingname']) )
+			);
 		}
 
 		// Finally, add the last list to the last user, and that to the recordset.

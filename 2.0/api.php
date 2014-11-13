@@ -10,15 +10,12 @@ error_reporting(-1);
 // print_r($result);
 
 function getToken(){
-
  	return md5(uniqid(mt_rand(), true));
 }
 
 $navString = $_SERVER['REQUEST_URI']; // Returns "/Mod_rewrite/edit/1/"
 // $puid = $_SESSION['puid'];
 // $puids = $_SESSION['puids'];
-
-
 
 $parts = explode('/', $navString); // Break into an array
 
@@ -36,8 +33,6 @@ $obj['apipos'] = $apiPos;
 // Build session Variables it htere is a token.
 if(isset($_POST['token'])){
 	#TODO This needs to come from the database.
-
-
 	$_SESSION['puid'] = 1;
 	$_SESSION['puids'] = '2,3,4,719,720,724,156';
 	$_SESSION['username'] = 'Ben Guthrie';
@@ -61,14 +56,9 @@ function tokenError(){
 
 switch(strtolower($apiCall)){
 
-/* 
-	!
-	!
-	!
-*/
-
 /* 10/31/2014 */
 case 'fbtoken':
+
 	require_once('api_fbToken.php');
 
 
@@ -186,12 +176,13 @@ case 'search':
 	}
 break;
 
-/* 10/19/2014 - Updated to include everything needed for the initial login. */
+/* 10/19/2014 - Updated to include everything needed for the initial login. 
 case 'fblogin':
 	// No token required. This is the login bit.
 	require_once('api_fblogin.php');
 
 break;
+*/
 
 case 'getsome':
 	
@@ -211,7 +202,7 @@ break;
 
 /* NOT TOKEN FROM HERE DOWN - 10/19/2014 */
 
-
+/*
 case 'fbfriendstest':
 
 $obj = json_decode('{"call":"pFriends","apipos":1,"result":[{"id":"2","name":"Emily Muscarella Guthrie","fbuid":"605592731","things":"1259","shared":"633","dittoable":"626","lists":"143","sharedlists":"104"},{"id":"18","name":"Greg Guthrie","fbuid":"4700900","things":"1093","shared":"514","dittoable":"579","lists":"103","sharedlists":"76"},{"id":"25","name":"Jenny Muscarella Knowles","fbuid":"1489740361","things":"552","shared":"200","dittoable":"352","lists":"52","sharedlists":"34"},{"id":"156","name":"Matt Knowles","fbuid":"1016195417","things":"298","shared":"157","dittoable":"141","lists":"42","sharedlists":"32"},{"id":"14","name":"James Guthrie","fbuid":"4700538","things":"352","shared":"142","dittoable":"210","lists":"25","sharedlists":"21"},{"id":"64","name":"Jeff Bowen","fbuid":"4702676","things":"186","shared":"118","dittoable":"68","lists":"25","sharedlists":"19"},{"id":"132","name":"Julie Guthrie","fbuid":"1009170007","things":"271","shared":"104","dittoable":"167","lists":"29","sharedlists":"21"},{"id":"13","name":"Scott Guthrie","fbuid":"1009170001","things":"284","shared":"95","dittoable":"189","lists":"40","sharedlists":"21"},{"id":"69","name":"Desiree Lieber","fbuid":"1247873543","things":"144","shared":"40","dittoable":"104","lists":"6","sharedlists":"6"},{"id":"724","name":"Amy Kendrick Lee","fbuid":"1032705871","things":"41","shared":"23","dittoable":"18","lists":"8","sharedlists":"8"},{"id":"723","name":"Aimee Aslett Barborka","fbuid":"1463180510","things":"19","shared":"17","dittoable":"2","lists":"5","sharedlists":"5"},{"id":"733","name":"Carri Craver","fbuid":"500443894","things":"55","shared":"17","dittoable":"38","lists":"19","sharedlists":"8"},{"id":"161","name":"Randy Jensen","fbuid":"1661990056","things":"17","shared":"14","dittoable":"3","lists":"8","sharedlists":"7"},{"id":"168","name":"Ben Morrow","fbuid":"44401410","things":"108","shared":"7","dittoable":"101","lists":"2","sharedlists":"2"},{"id":"725","name":"Daniel Miller","fbuid":"10152556380552110","things":"2","shared":"2","dittoable":"0","lists":"2","sharedlists":"2"},{"id":"726","name":"Stephen Brewer","fbuid":"530649084","things":"2","shared":"2","dittoable":"0","lists":"2","sharedlists":"2"},{"id":"734","name":"Chirag Gupta","fbuid":"825550647","things":"5","shared":"1","dittoable":"4","lists":"4","sharedlists":"1"},{"id":"719","name":"BenTest GuthrieTest","fbuid":"1506496999593891","things":"12","shared":"0","dittoable":"12","lists":"3","sharedlists":"0"}],"puids":["2","18","25","156","14","64","132","13","69","724","723","733","161","168","725","726","734","719"]}');
@@ -250,9 +241,8 @@ case 'testcall':
 break;
 
 
-/* Return a user's activity 
-	9/12/2014 - Created 
-*/
+// Return a user's activity  9/12/2014 - Created 
+
 case 'getactivity':
 	if(!isset($_SESSION['puid'])){ $obj['error'] = true; $obj['errortxt']="You are not logged in."; break 1;};
 	$startTime = microtime();
@@ -418,10 +408,7 @@ break;
 case 'lo':
 	if(!isset($_SESSION['puid'])){ $obj['error'] = true; $obj['errortxt']="You are not logged in."; break 1;};
 	// todo - Send last key
-	/*forUserId: forUserId,
-            forListIds: forListIds,
-            filters: filters,
-            startAfter: startAfter*/
+	forUserId: forUserId,             forListIds: forListIds,            filters: filters,            startAfter: startAfter
     // Temp
     
    $_POST['forLists'] = 'all';
@@ -430,12 +417,6 @@ case 'lo':
     $_POST['lastKey'] = null;
     $_POST['direction'] = 'both';
 
-    /*
-    CREATE DEFINER=`root`@`localhost` PROCEDURE `spLists`(userId INT, forUserIDs TEXT, 
-	forLists TEXT , filters VARCHAR(255) ,
-	firstKey INT(11), lastKey INT(11), direction VARCHAR(255)
-)
-	*/
 
 	$q = "call spLists('".
 		$_SESSION['puid']."', '"
@@ -535,10 +516,7 @@ case "lists":
 	if(isset($_POST['listtype']) == false or count($_POST['listtype']) == 0){
 		$_POST['usertype'] = "p";
 	}
-/*	
-echo 'POST: ';
-print_r($_POST);
-*/
+
 	// q('call log("Passed User count","'.count($_POST['userq']).'"');
 	// q('call log("Passed User ","'. implode(',', $_POST['userq']) .'"');
 
@@ -632,6 +610,7 @@ break;
 	break;
 */
 
+/*
 case "modallist":
 	// todo - replace the testpuids
 	if(!isset($_SESSION['puid'])){ $obj['error'] = true; $obj['errortxt']="You are not logged in."; break 1;};
@@ -697,6 +676,7 @@ modalList: function(listnameid, listname){
          $http({method:'POST',url:'api/modalList', 
 */
 
+/*
 
 case "friends":
 	if(!isset($_SESSION['puid'])){ $obj['error'] = true; $obj['errortxt']="You are not logged in."; break 1;};
@@ -737,11 +717,13 @@ case "dittos":
 	$obj['dittosOut'] = $result[1];
 
 break;
-
+*/
 default:
 	$obj['error'] = true;
 	$obj['errortxt'] = "unknown request";
 break;
+
+
 
 }
 

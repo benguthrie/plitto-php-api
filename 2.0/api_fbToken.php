@@ -1,21 +1,17 @@
 <?php
-if(isset($_GET['fbToken'])){
+if(isset($_GET['fbToken'] ) ){
 	$fbToken = $_GET['fbToken'];	
-} else {
+} else if ( isset( $_POST['fbToken'] ) ){
 	$fbToken = $_POST['fbToken'];	
+} else {
+	$fbToken = '';
 }
-
+// TODO1 - Track this token in the Plitto database.
 $obj['fbtoken'] = $fbToken;
-
 
 $appId = '207184820755';
 $secret = 'a3b57227479539ea7812d58d3ebc00fc';
 
-	// The token 
-// require 'facebook-php-sdk-v4-4.0-dev/src/facebook/HttpClients/FacebookCurlHttpClient.php';
-// require 'facebook-php-sdk-v4-4.0-dev/src/facebook/HttpClients/FacebookHttpable.php';
-// require 'facebook-php-sdk-master/src/facebook.php';
-// 
 require 'Facebook/FacebookSession.php';
 require 'Facebook/Entities/AccessToken.php';
 require 'Facebook/HttpClients/FacebookHttpable.php';
@@ -44,20 +40,72 @@ FacebookSession::setDefaultApplication($appId,$secret);
 
 $session = new FacebookSession($fbToken);
 
+/*
+print_r($session);
+
+Facebook\FacebookSession Object
+(
+    [accessToken:Facebook\FacebookSession:private] => Facebook\Entities\AccessToken Object
+        (
+            [accessToken:protected] => CAAAAMD0tehMBABDb8YxoOd8JHPhUsJuvP0OUQLnxIX6C2giocrvQcrcqETJOVzKtqCWkY8p17SLCD0g1sWZAZB3DG8ECXMFTwVshyN5mAghaF3clBMNNMaMGp2bnbr7RhWjOBqRiDUNFpiAWS9AQ93i0DDZAAZCitwqiQ5UDI2QGbr6DR4PtotZBqQ4OcfzKHBjZAX7p45vrpkDxCqTwXx
+            [machineId:protected] => 
+            [expiresAt:protected] => 
+        )
+
+    [signedRequest:Facebook\FacebookSession:private] => 
+)
+*/
+
 // Get the GraphUser object for the current user:
 
 try {
   $me = (new FacebookRequest(
     $session, 'GET', '/me'
-  ))->execute()-> getResponse();
+  ))->execute()->getResponse();
   // 
-  // print_r($me);
+  /*
+  print_r($me);
+  stdClass Object
+(
+    [id] => 532345366
+    [email] => ben@bemily.com
+    [first_name] => Ben
+    [gender] => male
+    [last_name] => Guthrie
+    [link] => http://www.facebook.com/532345366
+    [locale] => en_US
+    [name] => Ben Guthrie
+    [timezone] => -6
+    [updated_time] => 2014-09-11T14:58:41+0000
+    [verified] => 1
+) */ 
+
+	
   $name = $me->name;
 
   $friends = (new FacebookRequest(
     $session, 'GET', '/me/Friends'
   ))->execute()->getResponse();
   // print_r($friends);
+  /*(
+    [data] => Array
+        (
+            [0] => stdClass Object
+                (
+                    [name] => James Guthrie
+                    [id] => 4700538
+                )
+
+            [1] => stdClass Object
+                (
+                    [name] => Greg Guthrie
+                    [id] => 4700900
+                )
+
+            [2] => stdClass Object
+                (
+                    [name] => Jeff Bowen
+                    [id] => 4702676 */
 
   // Time to process, login and return a plitto response.
   if(strlen($name) === 0){
@@ -68,11 +116,11 @@ try {
 
   	// Prepare the friends
   	$friendsArr = Array();
-
-  	
-		for($i=0; $i<count($friends -> data); $i++){
-
-			$friendsArr[] = $friends -> data[$i] -> id;
+  	$friendsCt = count($friends -> data);
+  	if($friendsCt > 0){
+			for($i=0; $i < $friendsCt; $i++){
+				$friendsArr[] = $friends -> data[$i] -> id;
+			}
 		}
 
 		$obj['ft'] = $friendsArr;
@@ -80,9 +128,9 @@ try {
   	// 
   	$q = "call `v2.0_fbLogin`('".$me -> id."', '".$me -> name."','" .$me -> email ."','".implode(',',$friendsArr)."')";	
 
-		$debug = true;
+		$debug = false;
 
-		if($debug===false){
+		if($debug===true){
 			$obj['q'] =$q;
 			// Debug
 	  	// $obj['friendsTemp'] = $friends;
@@ -97,26 +145,44 @@ try {
 	  	// echo 'end';
 
 		} else {
-			
+
 			$results = q($q);
+
+			// Error Handling
+
+			// For debugging.
 			$obj['resultstemp'] = $results;
+
+			// Build the "me" part of the object from the API response.
+
+			// Make sure that we have a valid response before proceeding.
+			if($results[0]['puid']){
+				$obj['me'] = $results[0];	
+				$token = $results[0]['token'];
+
+				// Get the other data is the token was valid.
+				if(strlen($results[0]['token']) > 5){
+					$q = "call `v2.0_friends`('".$token."')";
+					$friendsResult = q($q);
+					$obj['friends'] = $friendsResult;
+
+					$qg = "call `v2.0_getSome`('','".$token."','','','ditto');";
+
+					$obj['qg'] = $qg;
+				 
+					$getSome = q($qg); 
+					$obj['getSome'] =  resultsToObject($getSome);
+				}
+			} else {
+				$obj['error'] = true;
+			}
+
+			
 
 			// PRINT_R($results[0]);
 
-			$obj['me'] = $results[0];
 
-			$token = $results[0]['token'];
-
-			$q = "call `v2.0_friends`('".$token."')";
-			$friendsResult = q($q);
-			$obj['friends'] = $friendsResult;
-
-			$qg = "call `v2.0_getSome`('','".$token."','','','ditto');";
-
-			$obj['qg'] = $qg;
-		 
-			$getSome = q($qg); 
-			$obj['getSome'] =  resultsToObject($getSome);
+			
 		}
   }
   // echo json_encode($obj);
@@ -126,5 +192,6 @@ try {
 } catch (\Exception $e) { 
   // Some other error occurred
 }
+/* */
 
 ?>
