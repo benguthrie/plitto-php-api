@@ -27,7 +27,7 @@ $obj = Array();
 
 $obj['call'] = $apiCall;
 $obj['apipos'] = $apiPos;
-// This is for debugging
+// This is for debuggingF
 // $obj[] = Array("note" => "This is for debugging" , "type" => $apiCall);
 
 // Build session Variables it htere is a token.
@@ -58,12 +58,15 @@ switch(strtolower($apiCall)){
 
 /* 10/31/2014 */
 case 'fbtoken':
-
 	require_once('api_fbToken.php');
-
-
 break;
 
+/* 10/19/2014 - Updated to include everything needed for the initial login. 
+case 'fblogin':
+	// No token required. This is the login bit.
+	require_once('api_fblogin.php');
+break;
+*/
 
 /* 10/20/2014 */
 
@@ -176,13 +179,6 @@ case 'search':
 	}
 break;
 
-/* 10/19/2014 - Updated to include everything needed for the initial login. 
-case 'fblogin':
-	// No token required. This is the login bit.
-	require_once('api_fblogin.php');
-
-break;
-*/
 
 case 'getsome':
 	

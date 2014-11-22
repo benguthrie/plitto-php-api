@@ -58,10 +58,19 @@ Facebook\FacebookSession Object
 
 // Get the GraphUser object for the current user:
 
+$debug = false;
+
+
 try {
   $me = (new FacebookRequest(
     $session, 'GET', '/me'
   ))->execute()->getResponse();
+
+if ($debug === true ) {
+  $obj['debug'] = true;
+  $obj['meDebug'] = $me;
+}
+
   // 
   /*
   print_r($me);
@@ -86,6 +95,9 @@ try {
   $friends = (new FacebookRequest(
     $session, 'GET', '/me/Friends'
   ))->execute()->getResponse();
+  if ($debug === true ) {
+    $obj['friendsDebug'] = $friends;
+  }
   // print_r($friends);
   /*(
     [data] => Array
@@ -127,8 +139,6 @@ try {
   	// Prepare the call 
   	// 
   	$q = "call `v2.0_fbLogin`('".$me -> id."', '".$me -> name."','" .$me -> email ."','".implode(',',$friendsArr)."')";	
-
-		$debug = false;
 
 		if($debug===true){
 			$obj['q'] =$q;
