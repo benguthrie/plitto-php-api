@@ -40,9 +40,8 @@ FacebookSession::setDefaultApplication($appId,$secret);
 
 $session = new FacebookSession($fbToken);
 
+// print_r($session);
 /*
-print_r($session);
-
 Facebook\FacebookSession Object
 (
     [accessToken:Facebook\FacebookSession:private] => Facebook\Entities\AccessToken Object
@@ -60,34 +59,19 @@ Facebook\FacebookSession Object
 
 $debug = false;
 
-
+// TODO1 - This is not running locally.
 try {
   $me = (new FacebookRequest(
     $session, 'GET', '/me'
   ))->execute()->getResponse();
+
+
 
 if ($debug === true ) {
   $obj['debug'] = true;
   $obj['meDebug'] = $me;
 }
 
-  // 
-  /*
-  print_r($me);
-  stdClass Object
-(
-    [id] => 532345366
-    [email] => ben@bemily.com
-    [first_name] => Ben
-    [gender] => male
-    [last_name] => Guthrie
-    [link] => http://www.facebook.com/532345366
-    [locale] => en_US
-    [name] => Ben Guthrie
-    [timezone] => -6
-    [updated_time] => 2014-09-11T14:58:41+0000
-    [verified] => 1
-) */ 
 
 	
   $name = $me->name;
@@ -98,6 +82,9 @@ if ($debug === true ) {
   if ($debug === true ) {
     $obj['friendsDebug'] = $friends;
   }
+
+  $obj['86'] = 86;
+
   // print_r($friends);
   /*(
     [data] => Array
@@ -188,20 +175,35 @@ if ($debug === true ) {
 			}
 
 			
-
-			// PRINT_R($results[0]);
-
-
-			
 		}
   }
   // echo json_encode($obj);
 
 } catch (FacebookRequestException $e) {
   // The Graph API returned an error
+  $obj['error'] = true;
+  $obj['errorTxt'] = 'FacebookERrror';
+  print_r($e);
 } catch (\Exception $e) { 
   // Some other error occurred
 }
 /* */
 
+  // 
+  /*
+  print_r($me);
+  stdClass Object
+(
+    [id] => 532345366
+    [email] => ben@bemily.com
+    [first_name] => Ben
+    [gender] => male
+    [last_name] => Guthrie
+    [link] => http://www.facebook.com/532345366
+    [locale] => en_US
+    [name] => Ben Guthrie
+    [timezone] => -6
+    [updated_time] => 2014-09-11T14:58:41+0000
+    [verified] => 1
+) */ 
 ?>
