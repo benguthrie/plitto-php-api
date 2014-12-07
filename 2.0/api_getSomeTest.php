@@ -4,10 +4,6 @@
 	$q = " call `spShowSome`( 'general' , '".$_SESSION['puid']."' , '".$_SESSION['puids']."' , null );";
 
 	// 	$obj['q'] = $q;
-
-	// 
-
-	// $results = resultsToObject(q($q));
 	$results = q($q);
 
 

@@ -47,57 +47,5 @@ else
 	
 }
 
-
-
-
-/*
-	$obj['q'] = " call `spShowSome`( 'general' , '".$_SESSION['puid']."' , '".$_SESSION['puids']."' , null );";
-
-	
-
-	// 
-
-	$obj['results'] = resultsToObject(q($q));
-	// $obj['results'] = q($q);
-	$obj['puids'] = $_SESSION['puids'];
-
-	
-
-	// 
-	$q = "call `v2.0_loadList`('".$_POST['type']."','".$_POST['token']."','".$_POST['userFilter']."','".$_POST['listFilter']."','".$_POST['sharedFilter']."');";
-	
-
-	$results = q($q);
-
-	$debug = false;
-
-	if($debug == true){
-		$obj['q'] = $q;	
-		// $obj['results'] = $results;
-		// print_r($results);
-
-		foreach($results as $row){
-			echo "row" . $row['id']." ".$row['username'];
-			
-		}
-
-	} else {
-
-		if(isset($results[0]['error'])){
-			// $obj['results'] =$results;
-			$obj['q'] = $q;
-			$obj['errortxt'] = "Error. This didn't fit the model.";
-			$obj['results'] = $results;
-		} else {
-			$obj['q'] = $q;	
-			// 
-			// $obj['results'] = resultsToObject($results);
-			// $obj['results'] = $results;
-
-			$obj['results'] = resultsToObject($results);
-		}
-	}
-	// $obj['post'] = $_POST;
-	*/
 ?>
 

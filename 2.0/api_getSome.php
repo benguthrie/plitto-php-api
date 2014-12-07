@@ -40,9 +40,7 @@
 			$obj['results'] = $results;
 		} else {
 			$obj['q'] = $q;	
-			// 
-			// $obj['results'] = resultsToObject($results);
-			// $obj['results'] = $results;
+			
 
 			$obj['results'] = resultsToObject($results);
 		}
