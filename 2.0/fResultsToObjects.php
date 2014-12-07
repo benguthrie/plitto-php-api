@@ -99,6 +99,8 @@ function resultsToObject($results){
 				, "dittofbuid" => $results[$i]['dittofbuid']
 				, "dittousername" => $results[$i]['dittousername']
 				, "thingname" => json_decode( json_encode($results[$i]['thingname']) )
+				, "comment" => ""
+				, "chatqueue" => "1"
 			);
 		}
 

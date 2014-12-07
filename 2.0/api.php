@@ -31,13 +31,14 @@ $obj['apipos'] = $apiPos;
 // $obj[] = Array("note" => "This is for debugging" , "type" => $apiCall);
 
 // Build session Variables it htere is a token.
-if(isset($_POST['token'])){
-	#TODO This needs to come from the database.
-	$_SESSION['puid'] = 1;
-	$_SESSION['puids'] = '2,3,4,719,720,724,156';
-	$_SESSION['username'] = 'Ben Guthrie';
-}
-
+/*
+	if(isset($_POST['token'])){
+		#TODO This needs to come from the database.
+		$_SESSION['puid'] = 1;
+		$_SESSION['puids'] = '2,3,4,719,720,724,156';
+		$_SESSION['username'] = 'Ben Guthrie';
+	}
+*/
 
 // Error - Break out of things if there is an error.
 
@@ -59,6 +60,10 @@ switch(strtolower($apiCall)){
 /* 10/31/2014 */
 case 'fbtoken':
 	require_once('api_fbToken.php');
+break;
+
+case "addcomment":
+	require_once("api_addComment.php");
 break;
 
 /* 10/19/2014 - Updated to include everything needed for the initial login. 
@@ -197,7 +202,14 @@ case "thingid":
 	$obj['results'] = q($q);
 break;
 
+case "checktoken":
+	$q = "call spCheckToken('".$_POST["token"]."')";
+	// $obj['q'] = $q;
+	$obj['results'] = q($q);
 
+	// Refresh the Facebook information using the Facebook token for this user.
+
+break;
 
 
 

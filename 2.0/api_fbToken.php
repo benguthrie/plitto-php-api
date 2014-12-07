@@ -83,7 +83,7 @@ if ($debug === true ) {
     $obj['friendsDebug'] = $friends;
   }
 
-  $obj['86'] = 86;
+  // $obj['86'] = 86;
 
   // print_r($friends);
   /*(
@@ -125,7 +125,7 @@ if ($debug === true ) {
 		$obj['ft'] = $friendsArr;
   	// Prepare the call 
   	// 
-  	$q = "call `v2.0_fbLogin`('".$me -> id."', '".$me -> name."','" .$me -> email ."','".implode(',',$friendsArr)."')";	
+  	$q = "call `v2.0_fbLogin`('".$me -> id."', '".$me -> name."','" .$me -> email ."','".implode(',',$friendsArr)."','". $fbToken . "')";	
 
 		if($debug===true){
 			$obj['q'] =$q;
@@ -183,7 +183,10 @@ if ($debug === true ) {
   // The Graph API returned an error
   $obj['error'] = true;
   $obj['errorTxt'] = 'FacebookERrror';
-  print_r($e);
+  if($debug === true){
+    print_r($e);  
+  }
+  
 } catch (\Exception $e) { 
   // Some other error occurred
 }
