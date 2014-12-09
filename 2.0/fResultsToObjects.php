@@ -88,6 +88,8 @@ function resultsToObject($results){
 			);
 			*/
 
+
+
 // Add the item to the current list.
 			$l['items'][] = Array(
 				"id" => $results[$i]['id']

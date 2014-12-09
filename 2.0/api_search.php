@@ -1,5 +1,13 @@
 <?php
-	$q="call `v2.0_search`('".$_POST['token']."','".sanitize($_POST['search'])."');";
+
+// PROCEDURE `v2.0_listSearch`(thetoken VARCHAR(36), searchTerm TEXT)
+if( $_POST['searchFilter'] === "list"){
+	$q="call `v2.0_listSearch`('".$_POST['token']."', '".sanitize($_POST['search'])."' );";	
+} else {
+	$q="call `v2.0_search`('".$_POST['token']."', '".sanitize($_POST['search'])."' );";
+}
+
+	
 	// $obj['q'] = $q;
 	// 
 	$results = q($q);
