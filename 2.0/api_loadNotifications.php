@@ -36,8 +36,7 @@ else
 
 	// 
 	$obj['q'] = $q;
-	$results = q($q);
-	
+	$results = q($q);	
 
 	$obj['results'] = $results;
 
