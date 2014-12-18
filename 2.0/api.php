@@ -84,6 +84,19 @@ case 'test':
 	require_once('api_getSome.php');
 break;
 
+
+/* 12.17.2014 */
+
+case 'makenotificationread':
+	if(isset($_POST['token'])){
+		require_once('api_makeNotificationRead.php');
+	} else {
+		$obj = tokenError();
+	}
+
+break;
+
+/* 12.16.2014 */
 case 'loadnotifications':
 	if(isset($_POST['token'])){
 		require_once('api_loadNotifications.php');
