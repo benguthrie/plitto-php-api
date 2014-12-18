@@ -85,6 +85,16 @@ case 'test':
 break;
 
 
+/* 12.18.2014 */
+
+case 'updatecounts':
+	if(isset($_POST['token'])){
+		require_once('api_updateCounts.php');
+	} else {
+		$obj = tokenError();
+	}
+break;
+
 /* 12.17.2014 */
 
 case 'makenotificationread':
