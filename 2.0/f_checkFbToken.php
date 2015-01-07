@@ -1,13 +1,8 @@
 <?php
-if(isset($_GET['fbToken'] ) ){
-	$fbToken = $_GET['fbToken'];	
-} else if ( isset( $_POST['fbToken'] ) ){
-	$fbToken = $_POST['fbToken'];	
-} else {
-	$fbToken = '';
-}
-// TODO1 - Track this token in the Plitto database.
-$obj['fbtoken'] = $fbToken;
+
+function checkFbToken($fbToken){
+
+	$obj = new stdClass;
 
 $appId = '207184820755';
 $secret = 'a3b57227479539ea7812d58d3ebc00fc';
@@ -151,7 +146,7 @@ if ($debug === true ) {
 			// Build the "me" part of the object from the API response.
 
 			// Make sure that we have a valid response before proceeding.
-			if( $results[0]['puid'] ){
+			if($results[0]['puid']){
 				$obj['me'] = $results[0];	
 				$token = $results[0]['token'];
 
@@ -188,23 +183,8 @@ if ($debug === true ) {
 } catch (\Exception $e) { 
   // Some other error occurred
 }
-/* */
 
-  // 
-  /*
-  print_r($me);
-  stdClass Object
-(
-    [id] => 532345366
-    [email] => ben@bemily.com
-    [first_name] => Ben
-    [gender] => male
-    [last_name] => Guthrie
-    [link] => http://www.facebook.com/532345366
-    [locale] => en_US
-    [name] => Ben Guthrie
-    [timezone] => -6
-    [updated_time] => 2014-09-11T14:58:41+0000
-    [verified] => 1
-) */ 
+return $obj;
+}
+
 ?>

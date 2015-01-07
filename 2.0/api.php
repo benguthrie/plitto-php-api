@@ -3,7 +3,7 @@ session_start();
 header('Content-type: application/json');
 header("Access-Control-Allow-Origin: *");
 
- 	require_once('sql.inc');
+require_once('sql.inc');
 
 error_reporting(-1);
 
@@ -56,6 +56,16 @@ function tokenError(){
 
 
 switch(strtolower($apiCall)){
+/* Launch every time a user logs in.
+
+Updated 12.20. */
+
+
+
+case "checktoken":
+	require_once("api_checkToken.php");
+
+break;
 
 /* 10/31/2014 */
 case 'fbtoken':
@@ -232,15 +242,6 @@ case "thingid":
 	$q = 'call spthingId("'.sanitize($_POST['thingName']).'");';
 	$obj['q'] = $q;
 	$obj['results'] = q($q);
-break;
-
-case "checktoken":
-	$q = "call spCheckToken('".$_POST["token"]."')";
-	// $obj['q'] = $q;
-	$obj['results'] = q($q);
-
-	// Refresh the Facebook information using the Facebook token for this user.
-
 break;
 
 
