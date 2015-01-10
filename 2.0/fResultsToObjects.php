@@ -72,23 +72,6 @@ function resultsToObject($results){
 				// Set the new list varialbe.
 				$lid = $results[$i]['lid'];
 			}
-/*
-			// Add the item to the current list.
-			$l['items'][] = Array(
-				'added' => $results[$i]['added']
-
-				, 'tid' => $results[$i]['tid']
-				,'dittokey' => $results[$i]['dittokey']
-				, 'mykey' => $results[$i]['mykey']
-				,'dittouser' => $results[$i]['dittouser']
-				,'dittofbuid' => $results[$i]['dittofbuid']
-				,'dittousername' => $results[$i]['dittousername']
-				, 'thingname' => $results[$i]['thingname']
-
-			);
-			*/
-
-
 
 // Add the item to the current list.
 			$l['items'][] = Array(
@@ -104,6 +87,7 @@ function resultsToObject($results){
 				, "commentText" => $results[$i]['commentText']
 				, "commentRead" => $results[$i]['commentRead']
 				, "commentActive" => $results[$i]['commentActive']
+				, "ik" => $results[$i]['uuid']
 			);
 		}
 
@@ -120,5 +104,4 @@ function resultsToObject($results){
 	}
 	return $obj;
 }
-
 ?>
