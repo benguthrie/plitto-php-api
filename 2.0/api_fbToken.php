@@ -71,12 +71,14 @@ if ($debug === true ) {
 }
 
 
+
 	
   $name = $me->name;
 
   $friends = (new FacebookRequest(
     $session, 'GET', '/me/Friends'
   ))->execute()->getResponse();
+
   if ($debug === true ) {
     $obj['friendsDebug'] = $friends;
   }
@@ -177,6 +179,27 @@ if ($debug === true ) {
   }
   // echo json_encode($obj);
 
+  // Extend the life of the token.
+  $longFbToken = (new FacebookRequest(
+    $session, 'GET', '/oauth/access_token?grant_type=fb_exchange_token&'.
+      'client_id='. $appId .'&'.
+      'client_secret='. $secret .'&'.
+      'fb_exchange_token='. $fbToken
+  ))->execute()->getResponse();
+  
+  $obj['longToken'] = $longFbToken['access_token'];
+
+  // If there is a long token, update that in the database.
+  $qe = "call `v2.0_extendFbToken`('" . $token . "','" . $longFbToken['access_token'] ."');";
+  $obj['queQuery'] = $qe;
+  $obj['longTokenResults'] = q($qe); // v2.0_extendFbToken
+
+  if ($debug === true ) {
+    $obj['longFbToken'] = $longFbToken;
+    // 
+    $obj['testTokenFetch'] = $longFbToken['access_token'];
+  }
+
 } catch (FacebookRequestException $e) {
   // The Graph API returned an error
   $obj['error'] = true;
@@ -207,4 +230,7 @@ if ($debug === true ) {
     [updated_time] => 2014-09-11T14:58:41+0000
     [verified] => 1
 ) */ 
+
+
+
 ?>
