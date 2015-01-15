@@ -67,6 +67,12 @@ case "checktoken":
 
 break;
 
+
+/* 01/14/2014 -- TODO2 Remove the old chat bit. loadNotifications ? */
+case 'chatabout':
+	require_once('api_chatAbout.php');
+break;
+
 /* 10/31/2014 */
 case 'fbtoken':
 	require_once('api_fbToken.php');

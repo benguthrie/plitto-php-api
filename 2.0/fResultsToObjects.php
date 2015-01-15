@@ -88,6 +88,8 @@ function resultsToObject($results){
 				, "commentRead" => $results[$i]['commentRead']
 				, "commentActive" => $results[$i]['commentActive']
 				, "ik" => $results[$i]['uuid']
+				, "friendsWith" => "" /* TODO1 - Update this later to include the actual number of friends with */
+
 			);
 		}
 
