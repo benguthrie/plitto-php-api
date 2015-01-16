@@ -243,11 +243,17 @@ case 'getsome':
 break;
 
 case "thingid":
-
+	
+	if( isset($_POST['token'])  ){
+		$q = 'call `v2.0_thingId`("'. $_POST['token'] . '","'.sanitize($_POST['thingName']).'")';
+		$obj['q'] = $q;
+		$obj['results'] = q($q);
+	} else {
+		$obj = tokenError();
+	}
 //TODO0 $_POST['thingName']='Joseph';
-	$q = 'call spthingId("'.sanitize($_POST['thingName']).'");';
-	$obj['q'] = $q;
-	$obj['results'] = q($q);
+	// $q = 'call spthingId("'.sanitize($_POST['thingName']).'");';
+	
 break;
 
 default:

@@ -6,7 +6,10 @@
 	// $thingName = $mysqli-> real_escape_string($_POST['thingName']);
 	$q="call `v2.0_addtolist`('". $_POST['token']."','". $thingName ."','".
 		$_POST['listnameid']."');";
-	//$obj['q'] = $q;  
+
+
+	//
+	$obj['q'] = $q;  
 	$obj['results'] = q($q);
 	
 ?>
