@@ -1,5 +1,7 @@
 <?php 
-/* Load List - Builds all the stores for a list, or a subset. */
+/* Load List - Builds all the stores for a list, or a subset. 
+	This may never be used.
+*/
 
 if( 
 	array_key_exists('token', $_POST) == FALSE
@@ -30,15 +32,22 @@ else
 		$userId = intval($userId);
 	}
 
-
-	$q = 'call `v2.0_notifications`("'. $token .'", "'. $userId .'")';
 	$q = 'call `v2.0_notifications`("'. $token .'", '. $userId .')';
 
-	// 
-	$obj['q'] = $q;
-	$results = q($q);	
 
-	$obj['results'] = $results;
+	$results = q($q);
+
+	$sqlErrorCheck = tokenCheck($results);
+
+	if($sqlErrorCheck['error'] === true){
+		$obj =  $sqlErrorCheck;
+	} else {
+		// Debugging
+	 	
+	 	$obj['results'] = $results;
+	 	// $obj['results'] = $data;
+	 	
+	}
 
 	
 }

@@ -35,10 +35,24 @@ else
 	}
 
 	foreach($type as $item){
+
+		
+
+		
+
+		
+
 		$q = 'call `v2.0_loadList`("'.$token.'","'. $item .'", "'. $listId.'","' . $userIdFilter . '","' . $oldestKey .'","' . $sharedFilter. '")';
 		// 
 		$results = q($q);
-		$obj['q'] = $q;
+		$sqlErrorCheck = tokenCheck($results);
+		if($sqlErrorCheck['error'] === true){
+			$obj =  $sqlErrorCheck;
+			break 1;
+		} 
+
+
+// 		$obj['q'] = $q;
 		$obj['results'][$item] = resultsToObject($results);
 		// $obj['results'][$item] = $results;
 		// $obj['results'][$item] = Array();

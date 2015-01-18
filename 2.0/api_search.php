@@ -8,33 +8,40 @@ if( $_POST['searchFilter'] === "list"){
 }
 
 	
-	// $obj['q'] = $q;
-	// 
+
 	$results = q($q);
-	// 
-	// $obj['results'] = $results;
 
-	// Build out the results
+	$sqlErrorCheck = tokenCheck($results);
+	if($sqlErrorCheck['error'] === true){
+		$obj =  $sqlErrorCheck;
+	} else {
 
-	$searchResults = Array();
+		// Build out the results
 
-	$tempGroup = Array();
+		$searchResults = Array();
 
-	$groupId = 0;
+		$tempGroup = Array();
 
-	foreach($results as $row){
-		// echo $row['name'];
-		$searchResults[] = $row;
+		$groupId = 0;
+
+		foreach($results as $row){
+			// echo $row['name'];
+			$searchResults[] = $row;
+
+		}
+
+		// $obj['results'] = $searchResults;
+
+
+		$obj['results'] = searchProcess($searchResults);
+
+
+
 
 	}
+	
 
-	// $obj['results'] = $searchResults;
-
-
-	$obj['results'] = searchProcess($searchResults);
-
-
-	function searchProcess($r){
+function searchProcess($r){
 		$obj = Array();
 		if(!isset($r[0]['id'])){
 			return $r;
@@ -67,6 +74,5 @@ if( $_POST['searchFilter'] === "list"){
 			}
 			
 		}
-	}
-	
+}
 ?>

@@ -13,6 +13,24 @@ function getToken(){
  	return md5(uniqid(mt_rand(), true));
 }
 
+function tokenCheck($dbResults) {
+	$obj = Array();
+	
+	if(isset($dbResults[0]['error']) === true && $dbResults[0]['error'] === "1"){
+		// $obj['error'] = true;
+		// $obj['errorTxt'] = $dbResults[0]['errortxt'];
+
+		$obj = $dbResults[0];
+		$obj['error'] = true;
+	} else {
+		$obj['error'] = false;
+		
+	}
+	
+	return $obj;
+	
+}
+
 $navString = $_SERVER['REQUEST_URI']; // Returns "/Mod_rewrite/edit/1/"
 // $puid = $_SESSION['puid'];
 // $puids = $_SESSION['puids'];

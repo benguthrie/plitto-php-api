@@ -1,5 +1,8 @@
 <?php
-	/* This gets more content for lists or users when you open them. */
+	/* This gets more content for lists or users when you open them.
+		on 1/18/2015, this isn't used.
+
+	 */
 
 $obj['thetoken'] = $_POST['token'];
 
@@ -21,11 +24,7 @@ $obj['thetoken'] = $_POST['token'];
 			if(strpos($item,"undefined") === false){
 				$filters[] = $item;
 			}
-			//
-		//	$things[] = $existing[$i]['tid'];
-			// 
-			// $lists[] = $existing[$i]['lid'];
-			//print_r();
+	
 		}
 	}
 	// The filter string is now built for user, list, thing
@@ -42,55 +41,30 @@ $obj['thetoken'] = $_POST['token'];
 	$q = "call `v2.0_GetMore`('".$_POST['token']."','". $userFilter ."','". $_POST['type'] 
 		."','". $_POST['id']."','". $stringFilter ."')";
 
-	// $q = "call spGetMore(1,'2','user','2',');";
-	// call spGetMore(719,'','list','2067','')}
 
  	$obj['q'] = $q;
 
+ 	
+ 	
+
+
+
+	$results = q($q);
+
+	$sqlErrorCheck = tokenCheck($results);
+
+	if($sqlErrorCheck['error'] === true){
+		$obj =  $sqlErrorCheck;
+	} else {
+		// Debugging
+	 	// $obj['data'] = $data;
+
+	 	// 
+	 	$obj['results'] = resultsToObject($results);
+	 	// $obj['results'] = $data;
+	 	$obj['resultSize'] = count($results);
+	}
 	
-	/* 	 
- 	$q= sanitize($q);
 
-	*/ 
- 	 // 
- 	 // 
-
- 	$data = q($q);
- 	// Debugging
- 	// $obj['data'] = $data;
-
- 	// 
- 	$obj['results'] = resultsToObject($data);
- 	// $obj['results'] = $data;
- 	$obj['resultSize'] = count($data);
-
-/*
- 	$debug = 0;
- 	if($debug === 0){
- 	 	// $obj['type'] = $_POST['type'];
-	 	
-		// $obj['id'] = $_POST['id'];
-		// Prod
-	 	 // $res = q($q);
-	 	 // NEED 
-	 	 // $obj['res'] = $res;
-
-	 	// echo 'result count: '. count($res);
-
-		// Format the results.
-		// 
-	 	if(count($data) > 0){
-	 		$dataP = resultsToObject($data);
-	 		$obj['results'] =$dataP;
-	 	} else {
-	 		$obj['results'] = array();
-	 	}
-	 } else {
-	 	$obj['q'] = $q;
-	 }
-*/  	 
-
-// Inputs: {"call":"getMore","apipos":2,"type":"user","id":"37","existing":[{"lid":"7076","tid":"7478"},{"lid":"7076","tid":"7477"},{"lid":"2830","tid":"4493"},{"lid":"2830","tid":"4492"},{"lid":"2830","tid":"2834"},{"lid":"2830","tid":"3765"},{"lid":"231","tid":"7254"},{"lid":"2250","tid":"7285"},{"lid":"2250","tid":"6083"},{"lid":"2250","tid":"4998"}]}
-	
 
 ?>

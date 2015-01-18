@@ -21,85 +21,34 @@ $q = "call `v2.0_feed`('"
 	.",'".$_POST['continueKey']."'"
 	.",'".$newerOrOlder."'"
 	.");";
-
-$obj['q'] = $q;
-
-// 
 $results = q($q);
-// $obj['results'] = $results;
 
-// $obj['debug'] = $results;
-	
-   if($debug == true){
-		$obj['q'] = $q;	
-		// $obj['results'] = $results;
-		print_r($results);
+$sqlErrorCheck = tokenCheck($results);
 
-		foreach($results as $row){
-			echo "row" . $row['id']."
-			";
-		}
+if($sqlErrorCheck['error'] === true){
+    $obj =  $sqlErrorCheck;
+} else {
+  if($debug == true){
+    $obj['q'] = $q; 
+    // $obj['results'] = $results;
+    print_r($results);
 
-	} else {
-        // TODO1 - Copy this block to all places where resultsToObject come from.
-        if(isset($results[0]['error'])){
-            $obj['error'] = true;
-            $obj['errorTxt'] = $results[0]['errortxt'];
+    foreach($results as $row){
+      echo "row" . $row['id']."
+      ";
+    }
 
-            if($obj['errorTxt'] === "Invalid token"){
-                $obj['logout'] = true;
-            }
+  } else {
+    
+    $obj['results'] = resultsToObject($results);
+      
 
-        } else {
+    // $obj['results'] = q($q);
 
-            $obj['results'] = resultsToObject($results);
-        }
+  }
 
-		// $obj['results'] = q($q);
+}
 
-	}
    
-     /*
-Array
-(
-    [0] => Array
-        (
-            [id] => 166310
-            [uid] => 2
-            [username] => Emily Muscarella Guthrie
-            [fbuid] => 605592731
-            [lid] => 66
-            [listname] => Bands I have seen live
-            [tid] => 646
-            [thingname] => The Black Crowes
-            [added] => 2014-10-24 09:11:20
-            [state] => 1
-            [dittokey] => 1832
-            [dittouser] => 
-            [dittousername] => 
-            [dittofbuid] => 
-            [mykey] => 
-        )
-
-    [1] => Array
-        (
-            [id] => 166309
-            [uid] => 2
-            [username] => Emily Muscarella Guthrie
-            [fbuid] => 605592731
-            [lid] => 8986
-            [listname] => aweeee
-            [tid] => 8988
-            [thingname] => dung
-            [added] => 2014-10-23 22:15:00
-            [state] => 1
-            [dittokey] => 0
-            [dittouser] => 
-            [dittousername] => 
-            [dittofbuid] => 
-            [mykey] => 
-        )
-)
-			
-{"call":"showFeed","apipos":1,"thetoken":"75df7700d30cd7dfe84fa961d9c81e11","q":"call `v2.0_feed`('75df7700d30cd7dfe84fa961d9c81e11',  'friends', '', '', '','');"}*/
+   
 ?>

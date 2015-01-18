@@ -45,15 +45,47 @@ else
 	if( count($readDitto) > 0) {
 
 		$obj['readCount'] = count($readDitto);
-		$obj['qD'] = "call `v2.0_makeRead` ('".$_POST['token']."',  ditto','". implode(", ", $readDitto ) . "');";
+		$qD = "call `v2.0_makeRead` ('".$_POST['token']."',  ditto','". implode(", ", $readDitto ) . "');";
 
-		$obj['resultsD'] = q($obj['qD']);
+		// $obj['qD'] = $qD;
+		$results = q($qD);
+
+		$sqlErrorCheck = tokenCheck($results);
+
+		if($sqlErrorCheck['error'] === true){
+			$obj =  $sqlErrorCheck;
+			break 1;
+		} else {
+			// Debugging
+		 	
+		 	$obj['resultsD'] = $results;
+		 	// $obj['results'] = $data;
+		 	
+		}
+		
 
 	} 
 
 	if( count($readChat) > 0) {
-		$obj['qC'] = "call `v2.0_makeRead` ('".$_POST['token']."','chat','". implode(", ", $readChat ) . "');";
-		$obj['resultsC'] = q($obj['qC']);
+		$qC = "call `v2.0_makeRead` ('".$_POST['token']."','chat','". implode(", ", $readChat ) . "');";
+		
+
+		// $obj['qC'] = $qC;
+		$results = q($qC);
+
+		$sqlErrorCheck = tokenCheck($results);
+
+		if($sqlErrorCheck['error'] === true){
+			$obj =  $sqlErrorCheck;
+			break 1;
+		} else {
+			// Debugging
+		 	
+		 	$obj['resultC'] = $results;
+		 	// $obj['results'] = $data;
+		 	
+		}
+
 	}
 
 

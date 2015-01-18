@@ -10,10 +10,19 @@
 		."','". $_POST['action']
 		."');";
 
-	$obj['q'] = $q;
-	$obj['results'] = q($q);
-	
-	if( count($obj['results'] ) === 0 ) {
+	// 
+$obj['q'] = $q;
+
+	$results = q($q);
+
+	$sqlErrorCheck = tokenCheck($results);
+
+	if($sqlErrorCheck['error'] === true){
+		$obj =  $sqlErrorCheck;
+	} else {
+		$obj['results'] = $results;
+
+		if( count($obj['results'] ) === 0 ) {
 		$obj['results'][0] = 
 			Array( 
 				"thekey" => "0", 
@@ -24,7 +33,10 @@
 				"uuid" => "0"
 
 			);
-	} 
+		} 
+	}
+	
+	
 
 
 	/**/

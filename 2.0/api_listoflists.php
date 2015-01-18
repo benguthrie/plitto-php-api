@@ -14,6 +14,23 @@
 	// }
 
 	// 
-	$result = q($q); $obj['results'] = $result;
+	$result = q($q); 
+	$obj['results'] = $result;
+
+
+
+	$results = q($q);
+
+	$sqlErrorCheck = tokenCheck($results);
+
+	if($sqlErrorCheck['error'] === true){
+		$obj =  $sqlErrorCheck;
+	} else {
+		// Debugging
+	 	
+	 	$obj['results'] = $results;
+	 	// $obj['results'] = $data;
+	 	
+	}
 
 ?>

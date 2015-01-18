@@ -7,9 +7,15 @@
 	$q="call `v2.0_addtolist`('". $_POST['token']."','". $thingName ."','".
 		$_POST['listnameid']."');";
 
+	$results = q($q);
 
-	//
-	$obj['q'] = $q;  
-	$obj['results'] = q($q);
+	$sqlErrorCheck = tokenCheck($results);
+
+	if($sqlErrorCheck['error'] === true){
+		$obj =  $sqlErrorCheck;
+	} else {
+		$obj['results'] = $results;
+	}
+
 	
 ?>

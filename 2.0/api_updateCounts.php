@@ -13,17 +13,15 @@ if(
 
 $token = $_POST['token'];
 
-$debug = false;
-if($debug === true){
-	$obj['debugInputs'] = Array( "token"=> $token );
-} 
-else
-{
-	// Process $userId to be -1, for "all", 0 for "strangers" -- Not supported currently., or an integer of the requested userId.
+$q= "call `v2.0_counts`('". $token."')";
+$results = q($q);
+$sqlErrorCheck = tokenCheck($results);
 
-	$q= "call `v2.0_counts`('". $token."')";
-	$obj['results'] = q($q)[0];
-
+if($sqlErrorCheck['error'] === true){
+    $obj =  $sqlErrorCheck;
+} else {
+	$obj['results'] = $results[0]; 
 }
+
 
 ?>

@@ -26,13 +26,23 @@ else
 		$q = 'call `v2.0_chatAbout`("'.$token.'","'. $userFilter .'" )';
 		// 
 		$results = q($q);
-		$obj['q'] = $q;
-		$obj['results'] = resultsToObject($results);
-		// $obj['results'][$item] = $results;
-		// $obj['results'][$item] = Array();
+
+		$sqlErrorCheck = tokenCheck($results);
+
+		if($sqlErrorCheck['error'] === true){
+			$obj =  $sqlErrorCheck;
+		} else {
+			$obj['results'] = resultsToObject($results);
+		}
 	
 	
 }
+
+
+
+
+
+	
 
 ?>
 

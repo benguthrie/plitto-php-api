@@ -1,49 +1,41 @@
 <?php 
-
-/*
-	$obj['q'] = " call `spShowSome`( 'general' , '".$_SESSION['puid']."' , '".$_SESSION['puids']."' , null );";
-
-	
-
-	// 
-
-	$obj['results'] = resultsToObject(q($q));
-	// $obj['results'] = q($q);
-	$obj['puids'] = $_SESSION['puids'];
-
-	*/
-
-	// 
+	/* GetSome gets some things that are either dittoable, or in common between two users, or one user and a group of their friends. */
 	$q = "call `v2.0_getSome`('".$_POST['type']."','".$_POST['token']."','".$_POST['userFilter']."','".$_POST['listFilter']."','".$_POST['sharedFilter']."');";
 	
-
 	$results = q($q);
 
-	$debug = false;
+	$sqlErrorCheck = tokenCheck($results);
 
-	if($debug == true){
-		$obj['q'] = $q;	
-		// $obj['results'] = $results;
-		// print_r($results);
-
-		foreach($results as $row){
-			echo "row" . $row['id']." ".$row['username'];
-			
-		}
-
+	if($sqlErrorCheck['error'] === true){
+		$obj =  $sqlErrorCheck;
 	} else {
+		/* Begin the processing of the data results */
+		$debug = false;
 
-		if(isset($results[0]['error'])){
-			// $obj['results'] =$results;
-			$obj['q'] = $q;
-			$obj['errortxt'] = "Error. This didn't fit the model.";
-			$obj['results'] = $results;
-		} else {
+		if($debug == true){
 			$obj['q'] = $q;	
-			
+			// $obj['results'] = $results;
+			// print_r($results);
 
-			$obj['results'] = resultsToObject($results);
+			foreach($results as $row){
+				echo "row" . $row['id']." ".$row['username'];
+			}
+
+		} else {
+
+			if(isset($results[0]['error'])){
+				// $obj['results'] =$results;
+				$obj['q'] = $q;
+				$obj['errortxt'] = "Error. This didn't fit the model.";
+				$obj['results'] = $results;
+			} else {
+				// $obj['q'] = $q;	
+				
+
+				$obj['results'] = resultsToObject($results);
+			}
 		}
+	
 	}
 	// $obj['post'] = $_POST;
 ?>
