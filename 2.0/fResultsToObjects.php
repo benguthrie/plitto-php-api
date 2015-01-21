@@ -4,7 +4,7 @@
 function resultsToObject($results){
 	$obj = Array();
 
-	$obj['rowcount'] = count($results);
+	// $obj['rowcount'] = count($results);
 
 	// echo $results;
 	// Ensure that there are results

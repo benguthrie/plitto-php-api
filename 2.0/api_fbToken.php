@@ -125,8 +125,13 @@ if ($debug === true ) {
 		$obj['ft'] = $friendsArr;
   	// Prepare the call 
   	// 
-  	$q = "call `v2.0_fbLogin`('".$me -> id."', '".$me -> name."','" .$me -> email ."','".implode(',',$friendsArr)."','". $fbToken . "')";	
-
+  	$q = "call `v2.0_fbLogin`('".
+      $me -> id."', '".
+      $me -> name."','".
+      $me -> email ."','".
+      implode(',',$friendsArr)."','". 
+      $fbToken . "')";	
+    // $debug = true;
 		if($debug===true){
 			$obj['q'] =$q;
 			// Debug

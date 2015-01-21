@@ -42,7 +42,14 @@ else
 
 		
 
-		$q = 'call `v2.0_loadList`("'.$token.'","'. $item .'", "'. $listId.'","' . $userIdFilter . '","' . $oldestKey .'","' . $sharedFilter. '")';
+		$q = 'call `v2.0_loadList`("'.
+			$token.'","'.
+			$item .'", "'.
+			$listId.'","' .
+			$userIdFilter . '","' .
+			$oldestKey .'","' .
+			$sharedFilter. 
+		'")';
 		// 
 		$results = q($q);
 		$sqlErrorCheck = tokenCheck($results);
