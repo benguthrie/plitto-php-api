@@ -89,7 +89,7 @@ function resultsToObject($results){
 				, "commentActive" => $results[$i]['commentActive']
 				, "ik" => $results[$i]['uuid']
 				, "friendsWith" => "" /* TODO1 - Update this later to include the actual number of friends with */
-
+				, "test1" => $lid === $results[$i]['lid']
 			);
 		}
 

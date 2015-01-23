@@ -36,12 +36,6 @@ else
 
 	foreach($type as $item){
 
-		
-
-		
-
-		
-
 		$q = 'call `v2.0_loadList`("'.
 			$token.'","'.
 			$item .'", "'.
@@ -64,9 +58,6 @@ else
 		// $obj['results'][$item] = $results;
 		// $obj['results'][$item] = Array();
 	}
-
-	
 }
 
 ?>
-

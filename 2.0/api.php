@@ -79,10 +79,18 @@ switch(strtolower($apiCall)){
 Updated 12.20. */
 
 
+/* 1/22/2014 Get info about a user.*/
+case "userinfo":
+	require_once("api_userInfo.php");
+break;
+
+/* 1/21/2014 Populate the list of friends.*/
+case "friendslist":
+	require_once("api_friendsList.php");
+break;
 
 case "checktoken":
 	require_once("api_checkToken.php");
-
 break;
 
 

@@ -33,8 +33,9 @@ $q = "call `v2.0_tokenCheck`('".$_POST["token"]."')";
 
   $results = q($q);
 
+  /* Disabled 1/22/2015 to increase speed. The client doesn't need to see the private FB Token.
   $obj['results'] = $results;
-
+  */
   
 
 
@@ -133,7 +134,9 @@ else {
         }
       }
 
-      $obj['ft'] = $friendsArr;
+      /* Disabled 1/22/2015 to increase speed. 
+        $obj['ft'] = $friendsArr;
+      */ 
       // Prepare the call 
       // 
       $q = "call `v2.0_fbLogin`('".$me -> id."', '".$me -> name."','" .$me -> email ."','".implode(',',$friendsArr)."','". $fbToken . "')"; 
@@ -158,28 +161,36 @@ else {
 
         // Error Handling
 
-        // For debugging.
-        $obj['resultstemp'] = $results;
+        /* Disabled 1/22/2015 to increase speed. It's there for debugging
+          // $obj['resultstemp'] = $results;
+        */
 
         // Build the "me" part of the object from the API response.
 
         // Make sure that we have a valid response before proceeding.
         if( isset($results[0]["puid"] ) ) {
           $obj['me'] = $results[0]; 
+          $obj['results'][0]['success'] = '1';
+          
+
           $token = $results[0]['token'];
 
           // Get the other data is the token was valid.
           if(strlen($results[0]['token']) > 5){
+            /* Disabled 1/22/2015 to increase speed. These will be loaded through different calls. 
+              TODO2 - Reinstate as part of the request?  
             $q = "call `v2.0_friends`('".$token."')";
             $friendsResult = q($q);
             $obj['friends'] = $friendsResult;
-
+            */
+            /* Disabled 1/22/2015 to increase speed. 
             $qg = "call `v2.0_getSome`('','" . $token . "','','','ditto');";
 
             $obj['qg'] = $qg;
            
             $getSome = q($qg); 
             $obj['getSome'] =  resultsToObject($getSome);
+            */
           }
         } else {
           $obj['error'] = true;
