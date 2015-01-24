@@ -54,6 +54,7 @@ else
 
 
 // 		$obj['q'] = $q;
+		$obj['type'] = $item;
 		$obj['results'][$item] = resultsToObject($results);
 		// $obj['results'][$item] = $results;
 		// $obj['results'][$item] = Array();

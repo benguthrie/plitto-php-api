@@ -77,6 +77,10 @@ switch(strtolower($apiCall)){
 /* Launch every time a user logs in.
 
 Updated 12.20. */
+/* 1/22/2014 Get info about a user.*/
+case "thingname":
+	require_once("api_thingName.php");
+break;
 
 
 /* 1/22/2014 Get info about a user.*/
