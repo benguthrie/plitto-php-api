@@ -26,8 +26,8 @@
 			if(isset($results[0]['error'])){
 				// $obj['results'] =$results;
 				$obj['q'] = $q;
-				$obj['errortxt'] = "Error. This didn't fit the model.";
-				$obj['results'] = $results;
+				$obj['errortxt'] = "No rows, or bad results. ";
+				$obj['results'] = [];
 			} else {
 				// $obj['q'] = $q;	
 				
