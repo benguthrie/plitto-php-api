@@ -18,6 +18,7 @@ function resultsToObject($results){
 		$u = Array();
 		$l = Array();
 
+		// Does it have commentCount and resultCount - TODO1 - add to all responses.
 
 
 		// Convert the results into a nice obect 
@@ -73,6 +74,19 @@ function resultsToObject($results){
 				$lid = $results[$i]['lid'];
 			}
 
+/*
+			if( property_exists($results[$i], 'dittoCount')){
+				$dittoCount = $results[$i]['dittoCount'];
+			} else {
+				$dittoCount = 0;
+			}
+
+			if( property_exists($results[$i], 'commentCount')){
+				$commentCount = $results[$i]['commentCount'];
+			} else {
+				$commentCount = 0;
+			}
+*/
 // Add the item to the current list.
 			$l['items'][] = Array(
 				"id" => $results[$i]['id']
@@ -89,7 +103,9 @@ function resultsToObject($results){
 				, "commentActive" => $results[$i]['commentActive']
 				, "ik" => $results[$i]['uuid']
 				, "friendsWith" => "" /* TODO1 - Update this later to include the actual number of friends with */
-				, "test1" => $lid === $results[$i]['lid']
+				// , "test1" => $lid === $results[$i]['lid']
+				, "dittoCount" => $results[$i]['dittoCount']
+				, "commentCount" => $results[$i]['commentCount']
 			);
 		}
 

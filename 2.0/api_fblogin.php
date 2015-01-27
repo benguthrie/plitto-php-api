@@ -1,6 +1,7 @@
 <?php
 // this function expects the user id, email and name from Facebook.;
 
+/* Test to see if this is used. 1/26/2015
     if(!$_POST['fbFriends'] or !$_POST['fbMe']){
         $obj['error'] = true;
         $obj['errortxt'] = 'missing inputs';
@@ -56,4 +57,5 @@
 
 		}
 	}
+	*/
 ?>

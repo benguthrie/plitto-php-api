@@ -41,11 +41,23 @@ FacebookSession::setDefaultApplication($appId,$secret);
 $session = new FacebookSession($fbToken);
 
 // print_r($session);
+/*
+Facebook\FacebookSession Object
+(
+    [accessToken:Facebook\FacebookSession:private] => Facebook\Entities\AccessToken Object
+        (
+            [accessToken:protected] => CAAAAMD0tehMBABDb8YxoOd8JHPhUsJuvP0OUQLnxIX6C2giocrvQcrcqETJOVzKtqCWkY8p17SLCD0g1sWZAZB3DG8ECXMFTwVshyN5mAghaF3clBMNNMaMGp2bnbr7RhWjOBqRiDUNFpiAWS9AQ93i0DDZAAZCitwqiQ5UDI2QGbr6DR4PtotZBqQ4OcfzKHBjZAX7p45vrpkDxCqTwXx
+            [machineId:protected] => 
+            [expiresAt:protected] => 
+        )
+
+    [signedRequest:Facebook\FacebookSession:private] => 
+)
+*/
 
 // Get the GraphUser object for the current user:
 
 $debug = false;
-$error = false;
 
 // TODO1 - This is not running locally.
 try {
@@ -53,99 +65,86 @@ try {
     $session, 'GET', '/me'
   ))->execute()->getResponse();
 
-  if ($debug === true ) {
-    $obj['debug'] = true;
-    $obj['meDebug'] = $me;
-  }
+
+
+if ($debug === true ) {
+  $obj['debug'] = true;
+  $obj['meDebug'] = $me;
+}
 
 	
   $name = $me->name;
-if(strlen($name) === 0){
-    $error = true;    
-    $obj['error'] = true;
-    $obj['errortxt'] = 'No username';
+
+  $friends = (new FacebookRequest(
+    $session, 'GET', '/me/friends?limit=500'
+  ))->execute()->getResponse();
+
+  if ($debug === true ) {
+    $obj['friendsDebug'] = $friends;
+  }
+
+  // $obj['86'] = 86;
+
+  // print_r($friends);
+  /*(
+    [data] => Array
+        (
+            [0] => stdClass Object
+                (
+                    [name] => James Guthrie
+                    [id] => 4700538
+                )
+
+            [1] => stdClass Object
+                (
+                    [name] => Greg Guthrie
+                    [id] => 4700900
+                )
+
+            [2] => stdClass Object
+                (
+                    [name] => Jeff Bowen
+                    [id] => 4702676 */
+
+  // Time to process, login and return a plitto response.
+  if(strlen($name) === 0){
+  	$obj['error'] = true;
+  	$obj['errortxt'] = 'No username';
   } else {
-    $obj['success'] = true;
-  }
+  	$obj['success'] = true;
 
-  /* Begin getting Facebook Friend Ids  */
-  if($error === false){
-   // Create a loop for getting ALL this user's friends who are on Plitto.
-    // Declare the number of friends to pull per request.
-    $pagingLimit = 50;
+  	// Prepare the friends
+  	$friendsArr = Array();
+  	$friendsCt = count($friends -> data);
+  	if($friendsCt > 0){
+			for($i=0; $i < $friendsCt; $i++){
+				$friendsArr[] = $friends -> data[$i] -> id;
+			}
+		}
 
-    // Create an array to hold their friends.
-    $friendsArr = Array();
-
-    // Get their first $pagingLimit friends.
-    $friends = (new FacebookRequest(
-      $session, 'GET', '/'. $me-> id . '/friends?limit='.$pagingLimit
-    ))->execute()->getResponse();
-
-    // Get a count of the number of friends returned.
-    $friendsCt = count($friends -> data);
-
-    $friendsArr = $friends -> data;
-
-    // For research, how many friends does this person have?
-    $obj['totalFriends'] = $friends -> summary -> total_count;
-
-    // Loop Count set
-    $loopCount = 1;
-
-    while( ($pagingLimit === $friendsCt) ){
-      // Overwrite the existing response.
-      $friends = (new FacebookRequest(
-        $session, 'GET', '/me/friends?limit='.$pagingLimit .'&offset=' . $pagingLimit * $loopCount
-      ))->execute()->getResponse();
-
-      $friendsCt = count($friends -> data); // Update to get the new number.
-
-      // Merge these friends.
-      $friendsArr = array_merge($friendsArr , $friends -> data);
-
-      $loopCount++;
-    }
-
-    $obj['totalLoops'] = $loopCount;
-
-  // Convert the friend IDs into a long string.
-    // Move them all into their own array.
-    $friendIds = Array();
-    $obj['friendCount'] = count($friendsArr);
-
-    foreach($friendsArr as &$friend){
-      $obj['lastFriend'] = $friend;
-      $friendIds[] = $friend->id;
-    }
-
-    // Now implode friendIds;
-    $fbIdsString = implode(',',$friendIds);
-  }
-  /* END Fb FRIENDS BY IDs. */
-  
+		$obj['ft'] = $friendsArr;
   	// Prepare the call 
   	// 
   	$q = "call `v2.0_fbLogin`('".
       $me -> id."', '".
       $me -> name."','".
       $me -> email ."','".
-      $fbIdsString."','". 
+      implode(',',$friendsArr)."','". 
       $fbToken . "')";	
     // $debug = true;
-  	if($debug===true){
-  		$obj['q'] =$q;
-  		// Debug
-    	// $obj['friendsTemp'] = $friends;
+		if($debug===true){
+			$obj['q'] =$q;
+			// Debug
+	  	// $obj['friendsTemp'] = $friends;
 
-    	// print_r($friends['data']);
-    	// echo 'start';
-    	// $friends = (array) $friends;
-    	// $friends = (object) $friends;
-    	// $friends = (array) $friends;
-    	// print_r($friends -> data);
-    	// print_r($friends ->'data');
-    	// echo 'end';
+	  	// print_r($friends['data']);
+	  	// echo 'start';
+	  	// $friends = (array) $friends;
+	  	// $friends = (object) $friends;
+	  	// $friends = (array) $friends;
+	  	// print_r($friends -> data);
+	  	// print_r($friends ->'data');
+	  	// echo 'end';
 
 		} else {
 
@@ -163,7 +162,6 @@ if(strlen($name) === 0){
 				$obj['me'] = $results[0];	
 				$token = $results[0]['token'];
 
-/* DECIDE - Should the first getSome happen as part of the login? */
 				// Get the other data is the token was valid.
 				if(strlen($results[0]['token']) > 5){
 					$q = "call `v2.0_friends`('".$token."')";
@@ -180,9 +178,11 @@ if(strlen($name) === 0){
 			} else {
 				$obj['error'] = true;
 			}
+
 			
 		}
-    // echo json_encode($obj);
+  }
+  // echo json_encode($obj);
 
   // Extend the life of the token.
   $longFbToken = (new FacebookRequest(
