@@ -17,6 +17,8 @@ $obj['q'] = $q;
 
 	$sqlErrorCheck = tokenCheck($results);
 
+	$obj['results'] = $results;
+
 	if($sqlErrorCheck['error'] === true){
 		$obj =  $sqlErrorCheck;
 	} else {

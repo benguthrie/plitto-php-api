@@ -7,15 +7,24 @@
 	$q="call `v2.0_addtolist`('". $_POST['token']."','". $thingName ."','".
 		$_POST['listnameid']."');";
 
-	$results = q($q);
+	if(strlen($thingName) > 0){
+		// The UI Shouldn't let this happen, so this must be an error.
+		$results = q($q);
 
-	$sqlErrorCheck = tokenCheck($results);
+		$sqlErrorCheck = tokenCheck($results);
 
-	if($sqlErrorCheck['error'] === true){
-		$obj =  $sqlErrorCheck;
+		if($sqlErrorCheck['error'] === true){
+			$obj =  $sqlErrorCheck;
+		} else {
+			$obj['results'] = $results;
+		}	
+
 	} else {
-		$obj['results'] = $results;
+		$obj['error'] = true;
+		$obj['errortxt'] = 'Null value submitted.';
 	}
+
+	
 
 	
 ?>
