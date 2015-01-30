@@ -1,42 +1,51 @@
 <?php 
-	/* GetSome gets some things that are either dittoable, or in common between two users, or one user and a group of their friends. */
-	$q = "call `v2.0_getSome`('".$_POST['type']."','".$_POST['token']."','".$_POST['userFilter']."','".$_POST['listFilter']."','".$_POST['sharedFilter']."');";
-	
-	$results = q($q);
+$error= false;
+if( !array_key_exists('token', $_POST)
+  || !array_key_exists('type', $_POST)
+  || !array_key_exists('userFilter', $_POST)
+  || !array_key_exists('listFilter', $_POST)
+  || !array_key_exists('sharedFilter', $_POST)
+){
+  $error= true;
+  $obj['error'] = true;
+  $obj['errortxt'] = 'One of the inputs was missing or incorrect.';
+}
 
-	$sqlErrorCheck = tokenCheck($results);
+if(!$error){
+  /* GetSome gets some things that are either dittoable, or in common between two users, or one user and a group of their friends. */
+  $q = "call `v2.0_getSome`('".$_POST['type']."','".$_POST['token']."','".$_POST['userFilter']."','".$_POST['listFilter']."','".$_POST['sharedFilter']."');";
 
-	if($sqlErrorCheck['error'] === true){
-		$obj =  $sqlErrorCheck;
-	} else {
-		/* Begin the processing of the data results */
-		$debug = false;
+  $results = q($q);
 
-		if($debug == true){
-			$obj['q'] = $q;	
-			// $obj['results'] = $results;
-			// print_r($results);
+  $sqlErrorCheck = tokenCheck($results);
 
-			foreach($results as $row){
-				echo "row" . $row['id']." ".$row['username'];
-			}
+  if($sqlErrorCheck['error'] === true){
+      $obj =  $sqlErrorCheck;
+  } else {
+    /* Begin the processing of the data results */
+    $debug = false;
 
-		} else {
+    if($debug == true){
+      $obj['q'] = $q;	
+      // $obj['results'] = $results;
 
-			if(isset($results[0]['error'])){
-				// $obj['results'] =$results;
-				$obj['q'] = $q;
-				$obj['errortxt'] = "No rows, or bad results. ";
-				$obj['results'] = [];
-			} else {
-				// $obj['q'] = $q;	
-				
+      foreach($results as $row){
+        echo "row" . $row['id']." ".$row['username'];
+      }
 
-				$obj['results'] = resultsToObject($results);
-			}
-		}
-	
-	}
-	// $obj['post'] = $_POST;
+    } else {
+
+      if(isset($results[0]['error'])){
+        // $obj['results'] =$results;
+        $obj['q'] = $q;
+        $obj['errortxt'] = "No rows, or bad results. ";
+        $obj['results'] = [];
+      } else {
+        // $obj['q'] = $q;	
+        $obj['results'] = resultsToObject($results);
+      }
+    }
+  }
+  // $obj['post'] = $_POST;
+}
 ?>
-

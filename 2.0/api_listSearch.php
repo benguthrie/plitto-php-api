@@ -1,22 +1,34 @@
 <?php 
-	$q = 'call `v2.0_listSearch`("'.$_POST['token'].'","'.$_POST['searchTerm'].'");';
-	// $obj['q'] = $q;
-	// 
-	// $obj['results'] = q($q);
 
+$error = false;
+if( !array_key_exists('token', $_POST)
+  || !array_key_exists('searchTerm', $_POST)
+){
 
-	$results = q($q);
+    $obj['error'] = true;
+    $obj['errortxt'] = 'One of the inputs was missing or incorrect.';
+    $error = true;
+}
 
-	$sqlErrorCheck = tokenCheck($results);
+if(!$error){
 
-	if($sqlErrorCheck['error'] === true){
-		$obj =  $sqlErrorCheck;
-	} else {
-		// Debugging
-	 	
-	 	$obj['results'] = $results;
-	 	// $obj['results'] = $data;
-	 	
-	}
+  $q = 'call `v2.0_listSearch`("'.$_POST['token'].'","'.$_POST['searchTerm'].'");';
+  // $obj['q'] = $q;
+  // 
+  // $obj['results'] = q($q);
 
+  $results = q($q);
+
+  $sqlErrorCheck = tokenCheck($results);
+
+  if($sqlErrorCheck['error'] === true){
+      $obj =  $sqlErrorCheck;
+  } else {
+      // Debugging
+
+      $obj['results'] = $results;
+      // $obj['results'] = $data;
+
+  }
+}
 ?>

@@ -2,11 +2,11 @@
 /* This function takes a short term Facebook Session (web) and logs into Plitto using it. */
 
 if(isset($_GET['fbToken'] ) ){
-	$fbToken = $_GET['fbToken'];	
+  $fbToken = $_GET['fbToken'];	
 } else if ( isset( $_POST['fbToken'] ) ){
-	$fbToken = $_POST['fbToken'];	
+  $fbToken = $_POST['fbToken'];	
 } else {
-	$fbToken = '';
+  $fbToken = '';
 }
 // TODO1 - Track this token in the Plitto database.
 $obj['fbtoken'] = $fbToken;
