@@ -44,6 +44,7 @@ function resultsToObject($results){
 				$l = Array(
 					'lid' => $results[$i]['lid'], 
 					'listname' => $results[$i]['listname'], 
+					'showMore' => true,
 					'items'=> Array());
 
 				// Update the user and list variables
@@ -69,6 +70,7 @@ function resultsToObject($results){
 				// Create the new list
 				$l = Array('lid' => $results[$i]['lid'], 
 					'listname' => json_decode( json_encode($results[$i]['listname']) ), 
+					'showMore' => true,
 					'items'=> Array());
 				// Set the new list varialbe.
 				$lid = $results[$i]['lid'];
