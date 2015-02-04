@@ -90,10 +90,20 @@ function resultsToObject($results){
 			}
 */
 // Add the item to the current list.
+      // convert timezone? 
+      // date_default_timezone_set('America/Chicago');
+      // $utc_time = new DateTimeZone('America/Los_Angeles');
+
+      // Prepare the relative time.
+			// $rowTime = 
+          
 			$l['items'][] = Array(
-				"id" => $results[$i]['id']
-				, "added" => $results[$i]['added']
-				, "tid" => $results[$i]['tid']
+				"id" => $results[$i]['id'],
+				// "added" => time_elapsed_string($results[$i]['added']), 
+				// "added" =>  date('YYYY-MM-DD H:i:s', strtotime('+6 hours', '2015-02-03 22:32:00')),
+				"added" =>  date( 'Y-m-d H:i:s' , strtotime( $results[$i]['added'] ) + 7200 ) , // Everything will be central time, until we get relative timezones.
+				"otherTime" => $results[$i]['added'], 
+				"tid" => $results[$i]['tid']
 				, "dittokey" => $results[$i]['dittokey']
 				, "mykey" => $results[$i]['mykey']
 				, "dittouser" => $results[$i]['dittouser']
@@ -124,4 +134,6 @@ function resultsToObject($results){
 	}
 	return $obj;
 }
+
+
 ?>
