@@ -22,7 +22,7 @@ function tokenCheck($dbResults)
     // $obj['error'] = true;
     // $obj['errorTxt'] = $dbResults[0]['errortxt'];
     
-    $obj          = $dbResults[0];
+    $obj = $dbResults[0];
     $obj['error'] = true;
   } else {
     $obj['error'] = false;
@@ -74,13 +74,28 @@ function tokenError()
 
 
 switch (strtolower($apiCall)) {
-  /* Launch every time a user logs in.
   
-  Updated 12.20. */
-  /* 1/26/2015 Test FB API.*/
-  case "admintest":
-    require_once("api_AdminTest.php");
-    break;
+  /* Section to debug the API and present test content */
+
+    /* 1/26/2015 Test FB API.*/
+    case "admintest":
+      require_once("api_AdminTest.php");
+      break;
+
+   /* 10/20/2014 */
+
+    // Populate the thing modal.
+    case 'test':
+      $_POST['token']      = '2adba3539cb1aaa9d48ed26d36b27906';
+      $_POST['type']       = "";
+      $_POST['userFilter'] = "";
+      $_POST['listFilter'] = "";
+      require_once('api_getSome.php');
+      break;
+
+    case 'testcontent':
+      require_once("api_testcontent.php");
+      break;
   
   /* 1/22/2014 Get info about a user.*/
   case "thingname":
@@ -124,17 +139,7 @@ switch (strtolower($apiCall)) {
   break;
   */
   
-  /* 10/20/2014 */
-  
-  // Populate the thing modal.
-  case 'test':
-    $_POST['token']      = '2adba3539cb1aaa9d48ed26d36b27906';
-    $_POST['type']       = "";
-    $_POST['userFilter'] = "";
-    $_POST['listFilter'] = "";
-    require_once('api_getSome.php');
-    break;
-  
+
   
   /* 12.18.2014 */
   

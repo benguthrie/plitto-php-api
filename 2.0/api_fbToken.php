@@ -179,6 +179,8 @@ if(strlen($name) === 0){
 				}
 			} else {
 				$obj['error'] = true;
+                $obj['errorTxt'] = "invalid results from plitto api call.. Quit not";
+                $obj['q'] = $q;
 			}
 			
 		}
@@ -196,6 +198,7 @@ if(strlen($name) === 0){
 
   // If there is a long token, update that in the database.
   $qe = "call `v2.0_extendFbToken`('" . $token . "','" . $longFbToken['access_token'] ."');";
+  // $qe = "call `v2.0_extendFbToken`('" . $token . "','CAAAAMD0tehMBAMrhQYnqZC2Akx611pZCFMUgPnr3KasueHm38sbUG8BAw1T398JlRDh8FBgIXG5FZAoTs0DZCAsaLnFyM1uQCs2IHYUnyTZAGw5FBCq9tou7YFNBGyrs8ZCLTGJeXu3FyxmnIEn0x0ZBUgDXpNiRZAemrqLd9HGXz6Dvp955ZBIpE5JAvC3VmoOS7xTlNDLubtFjUPmSZBZCOZCw60576e3dZAFUZD');";
   $obj['queQuery'] = $qe;
   $obj['longTokenResults'] = q($qe); // v2.0_extendFbToken
 
@@ -223,17 +226,17 @@ if(strlen($name) === 0){
   print_r($me);
   stdClass Object
 (
-    [id] => 532345366
-    [email] => ben@bemily.com
-    [first_name] => Ben
-    [gender] => male
-    [last_name] => Guthrie
-    [link] => http://www.facebook.com/532345366
-    [locale] => en_US
-    [name] => Ben Guthrie
-    [timezone] => -6
-    [updated_time] => 2014-09-11T14:58:41+0000
-    [verified] => 1
+  [id] => 532345366
+  [email] => ben@bemily.com
+  [first_name] => Ben
+  [gender] => male
+  [last_name] => Guthrie
+  [link] => http://www.facebook.com/532345366
+  [locale] => en_US
+  [name] => Ben Guthrie
+  [timezone] => -6
+  [updated_time] => 2014-09-11T14:58:41+0000
+  [verified] => 1
 ) */ 
 
 
