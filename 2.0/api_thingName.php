@@ -15,7 +15,7 @@ if(
 if(!$error){
 
   $q = "call `v2.0_thingName`('".$_POST['token']."','".$_POST['thingId']."')";
-  // $obj['q'] = $q;
+
   $results = q($q);
   // TODO2 - Token check this? $sqlErrorCheck = tokenCheck($results);
 
